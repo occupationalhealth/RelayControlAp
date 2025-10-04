@@ -22,14 +22,27 @@ jobs:
         distribution: temurin
         java-version: 11
 
-    - name: Set up Gradle Wrapper
+    - name: Debug - Check project structure
+      run: |
+        pwd
+        ls -la
+        ls -la gradlew || echo "gradlew not found in root"
+
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+
+    - name: Verify Gradle Wrapper
       run: ./gradlew --version
 
     - name: Build Debug APK
-      run: ./gradlew assembleDebug
+      run: ./gradlew assembleDebug --no-daemon
+
+    - name: Check if APK exists
+      run: find . -name "*.apk" -type f | head -5
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: RelayControlApp-debug-apk
         path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7
