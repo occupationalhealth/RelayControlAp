@@ -22,23 +22,34 @@ jobs:
         distribution: temurin
         java-version: 11
 
-    - name: Debug - Check project structure
+    - name: Check project structure
       run: |
+        echo "=== Project Structure ==="
         pwd
         ls -la
-        ls -la gradlew || echo "gradlew not found in root"
+        echo "=== Searching for gradlew ==="
+        find . -name "gradlew" -type f | head -10 || echo "No gradlew found"
 
-    - name: Make gradlew executable
-      run: chmod +x ./gradlew
+    - name: Setup Gradle
+      run: |
+        # اگر gradlew وجود دارد از آن استفاده کن، در غیر این صورت از gradle
+        if [ -f "./gradlew" ]; then
+          chmod +x ./gradlew
+          echo "Using existing gradlew"
+        else
+          echo "Using system gradle"
+          # اگر gradlew ندارید، این خط را حذف کنید
+          gradle wrapper
+          chmod +x ./gradlew
+        fi
 
-    - name: Verify Gradle Wrapper
-      run: ./gradlew --version
-
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug --no-daemon
-
-    - name: Check if APK exists
-      run: find . -name "*.apk" -type f | head -5
+    - name: Build with Gradle
+      run: |
+        if [ -f "./gradlew" ]; then
+          ./gradlew assembleDebug --no-daemon
+        else
+          gradle assembleDebug --no-daemon
+        fi
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
