@@ -1,15 +1,15 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android' // استفاده از نام استاندارد
 }
 
 android {
-    compileSdk 33
+    compileSdk 34 // ارتقاء به آخرین نسخه
 
     defaultConfig {
         applicationId "com.example.relaycontrol"
         minSdk 23
-        targetSdk 33
+        targetSdk 34 // ارتقاء به آخرین نسخه
         versionCode 1
         versionName "1.0"
     }
@@ -30,12 +30,12 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.core:core-ktx:1.12.0' // ارتقاء نسخه
+    implementation 'androidx.appcompat:appcompat:1.6.1' // ارتقاء نسخه
+    implementation 'com.google.android.material:material:1.10.0' // ارتقاء نسخه
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.biometric:biometric:1.1.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okio:okio:3.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0' // ارتقاء نسخه
+    implementation 'com.squareup.okio:okio:3.5.0' // ارتقاء نسخه
+    // حذف kotlin-stdlib زیرا توسط پلاگین Kotlin ارائه می‌شود
 }
