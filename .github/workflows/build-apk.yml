@@ -22,17 +22,9 @@ jobs:
         distribution: temurin
         java-version: 11
 
-    - name: Install Gradle
+    - name: Build with Gradle
       run: |
-        # نصب Gradle
-        sudo apt-get update
-        sudo apt-get install -y gradle
-
-    - name: Verify Gradle installation
-      run: gradle --version
-
-    - name: Build Debug APK
-      run: gradle assembleDebug --no-daemon
+        gradle clean assembleDebug --no-daemon --stacktrace --info
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
